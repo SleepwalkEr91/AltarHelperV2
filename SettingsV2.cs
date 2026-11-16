@@ -7,7 +7,7 @@ using System.Windows.Forms;
 using ExileCore.Shared.Attributes;
 using ExileCore.Shared.Interfaces;
 using ExileCore.Shared.Nodes;
-using ImGuiNET;
+using Hexa.NET.ImGui;
 using Newtonsoft.Json;
 using SharpDX;
 using SN = System.Numerics;
