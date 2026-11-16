@@ -41,7 +41,29 @@ namespace AltarHelperV2
             Name = "AltarHelperV2";
             LabelCache = new FrameCache<List<LabelOnGround>>(UpdateAltarLabelList);
             Settings.DrawUnknownModsDelegate = DrawUnknownModsSection;
+            Settings.EnsureProfiles();
             return true;
+        }
+
+        // ============================================================
+        // Profiles: follow the logged-in character
+        // ============================================================
+        private DateTime _nextCharacterCheck = DateTime.MinValue;
+
+        private void UpdateCharacterProfile()
+        {
+            if (DateTime.Now < _nextCharacterCheck) return;
+            _nextCharacterCheck = DateTime.Now.AddSeconds(2);
+
+            var name = GameController?.Player?
+                .GetComponent<ExileCore.PoEMemory.Components.Player>()?.PlayerName;
+            if (string.IsNullOrWhiteSpace(name) ||
+                string.Equals(name, Settings.CurrentCharacterName, StringComparison.Ordinal))
+                return;
+
+            var switchedTo = Settings.OnCharacterChanged(name);
+            if (switchedTo != null)
+                DebugWindow.LogMsg($"[AltarHelperV2] Character '{name}' -> profile '{switchedTo}'");
         }
 
         // ============================================================
@@ -115,6 +137,8 @@ namespace AltarHelperV2
             _frames.Clear();
             _boxes.Clear();
             _texts.Clear();
+
+            UpdateCharacterProfile();
 
             // Mode switch hotkey
             if (Settings.AltarSettings.HotkeyMode.PressedOnce() == true)

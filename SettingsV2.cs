@@ -15,7 +15,7 @@ using SN = System.Numerics;
 namespace AltarHelperV2
 {
     [SupportedOSPlatform("windows")]
-    public class Settings : ISettings
+    public partial class Settings : ISettings
     {
         public ToggleNode Enable { get; set; } = new ToggleNode(true);
         public AltarSettings AltarSettings { get; set; } = new AltarSettings();
@@ -29,6 +29,9 @@ namespace AltarHelperV2
         // Called by Core's DrawUnknownModsSection to move focus+filter to a mod in the main table
         [JsonIgnore]
         public Action<string> SetModFilter = _ => { };
+
+        [JsonIgnore]
+        public CustomNode ProfilesPanel { get; }
 
         [JsonIgnore]
         public CustomNode ModsTable { get; }
@@ -133,6 +136,17 @@ namespace AltarHelperV2
             ModAlerts = ModAlerts == null
                 ? new Dictionary<string, bool>(StringComparer.OrdinalIgnoreCase)
                 : new Dictionary<string, bool>(ModAlerts, StringComparer.OrdinalIgnoreCase);
+
+            if (Profiles != null)
+                foreach (var profile in Profiles.Values)
+                    profile?.RestoreComparers();
+            Profiles = Profiles?
+                .Where(kvp => kvp.Value != null && !string.IsNullOrWhiteSpace(kvp.Key))
+                .ToDictionary(kvp => kvp.Key, kvp => kvp.Value, StringComparer.OrdinalIgnoreCase);
+
+            // Re-point ModTiers/ModAlerts at the active profile (or migrate an
+            // older settings file into a Default profile).
+            EnsureProfiles();
         }
 
         public Settings()
@@ -141,11 +155,18 @@ namespace AltarHelperV2
             SetModFilter = (keyword) => { unitFilter = keyword; };
 
 #pragma warning disable CA1416
+            ProfilesPanel = new CustomNode
+            {
+                DrawDelegate = DrawProfiles
+            };
+
             ModsTable = new CustomNode
             {
                 DrawDelegate = () =>
                 {
-                    if (!ImGui.TreeNode("Mods & Weights (V2)")) return;
+                    EnsureProfiles();
+                    // "###" keeps the tree node id stable while the label shows the profile.
+                    if (!ImGui.TreeNode($"Mods & Weights (V2) - Profile: {ActiveProfile}###ModsWeightsV2")) return;
 
                     ImGui.TextColored(new SN.Vector4(1f, 0.65f, 0.2f, 1f),
                         "IMPORTANT: bundled weights are the maintainer's personal defaults.");

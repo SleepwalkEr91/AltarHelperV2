@@ -4,6 +4,10 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+### Added
+
+- **Profiles** for mod weights and alerts (e.g. one per character). The `Default` profile is used unless another one is selected. New profiles always start as a copy of `Default`; any profile except `Default` can be deleted. Optional **Automatically swap based on character name**: when the logged-in character changes, the profile with the same name (case-insensitive) is selected, otherwise `Default`. Existing settings are migrated into the `Default` profile automatically.
+
 ### Fixed
 
 - Cleared weights and alerts now stay cleared. ExileCore deserializes plugin settings with `ObjectCreationHandling.Auto`, which merged the saved file *into* the bundled defaults instead of replacing them, so any modifier carrying a bundled default reappeared at that default on the next launch after being cleared with `X` or `Reset All Weights`. Modifiers without a bundled default were unaffected, which made the failure look arbitrary.
