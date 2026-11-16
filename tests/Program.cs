@@ -8,6 +8,9 @@ var cases = new (string Input, string Expected)[]
     ("1.6% chance to drop an additional Divine Orb", "#% chance to drop an additional Divine Orb"),
     ("Take 600 Chaos Damage every 2 seconds", "Take # Chaos Damage every # seconds"),
     ("(-60–-40)% to Lightning Resistance", "(-#–-#)% to Lightning Resistance"),
+    ("2.8% chance to drop an additional [AbyssThread|Abyss Thread]", "#% chance to drop an additional Abyss Thread"),
+    ("Final Boss drops 3 additional [BreachThread|Breach Threads]", "Final Boss drops # additional Breach Threads"),
+    ("Enemies within 3.5 metres are Hindered, with 40% reduced Movement Speed", "Enemies within # metres are Hindered, with #% reduced Movement Speed"),
 };
 
 foreach (var (input, expected) in cases)

@@ -66,7 +66,8 @@ namespace AltarHelperV2
             ["#% chance to drop an additional Greater Eldritch Ichor"] = 50,
             ["#% chance to drop an additional Greater Eldritch Ember"] = 50,
             ["Final Boss drops # additional Orbs of Unmaking"] = 50,
-            ["#% chance to drop an additional Orb of Unmaking"] = 135,
+            ["#% chance to drop an additional Orb of Unmaking"] = 50,
+            ["Final Boss drops # additional Ancient Orbs"] = 125,
             ["Take # Chaos Damage per second during any Flask Effect"] = -9000,
             ["Projectiles are fired in random directions"] = 181,
             ["#% chance to be targeted by a Meteor when you use a Flask"] = -5000,
@@ -98,7 +99,7 @@ namespace AltarHelperV2
             ["#% to Critical Strike Multiplier per Power Charge"] = 287,
             ["#% increased Rarity of Items found in this Area"] = 41,
             ["#% chance to drop an additional Orb of Annulment"] = 1000,
-            ["#% chance to drop an additional Exalted Orb"] = 848,
+            ["#% chance to drop an additional Exalted Orb"] = 50,
             ["Final Boss drops # additional Orbs of Annulment"] = 1000,
         };
 

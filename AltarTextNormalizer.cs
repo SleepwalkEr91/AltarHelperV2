@@ -12,7 +12,16 @@ namespace AltarHelperV2
             @"(?<sign>[+-]?)\d+(?:[.,]\d+)?",
             RegexOptions.Compiled | RegexOptions.CultureInvariant);
 
+        // In-game item references are wrapped in markup tags, e.g.
+        // "[AbyssThread|Abyss Thread]" -> "Abyss Thread".
+        private static readonly Regex ItemTagPattern = new(
+            @"\[[^\[\]|]+\|(?<text>[^\[\]|]+)\]",
+            RegexOptions.Compiled | RegexOptions.CultureInvariant);
+
+        public static string StripItemTags(string value) =>
+            ItemTagPattern.Replace(value ?? string.Empty, "${text}");
+
         public static string NormalizeNumbers(string value) =>
-            NumberPattern.Replace(value ?? string.Empty, "${sign}#");
+            NumberPattern.Replace(StripItemTags(value), "${sign}#");
     }
 }
