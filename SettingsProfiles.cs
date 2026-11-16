@@ -208,9 +208,7 @@ namespace AltarHelperV2
             }
             if (ImGui.IsItemHovered())
                 ImGui.SetTooltip("The profile must be named exactly like the character (case-insensitive).\n" +
-                                 "Characters without a matching profile use the Default profile.\n" +
-                                 "Swaps when the logged-in character changes; a manual selection\n" +
-                                 "stays active until then.");
+                                 "Characters without a matching profile use the Default profile.");
             if (!string.IsNullOrEmpty(CurrentCharacterName))
             {
                 ImGui.SameLine();

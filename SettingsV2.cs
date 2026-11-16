@@ -77,24 +77,6 @@ namespace AltarHelperV2
             ["Curses you inflict are reflected back to you"] = -3000,
             ["Basic Currency Items dropped by slain Enemies have #% chance to be Duplicated"] = 170,
             ["#% chance to drop an additional Chaos Orb"] = 205,
-            ["Final Boss drops # additional Ultimatum Scarabs"] = 1230,
-            ["#% chance to drop an additional Ultimatum Scarab"] = 490,
-            ["Final Boss drops # additional Breach Scarabs"] = 615,
-            ["#% chance to drop an additional Breach Scarab"] = 246,
-            ["Final Boss drops # additional Delirium Scarabs"] = 615,
-            ["#% chance to drop an additional Delirium Scarab"] = 246,
-            ["Final Boss drops # additional Legion Scarabs"] = 490,
-            ["#% chance to drop an additional Legion Scarab"] = 196,
-            ["Final Boss drops # additional Essence Scarabs"] = 615,
-            ["#% chance to drop an additional Essence Scarab"] = 246,
-            ["Final Boss drops # additional Incursion Scarabs"] = 615,
-            ["#% chance to drop an additional Incursion Scarab"] = 246,
-            ["Final Boss drops # additional Beyond Scarabs"] = 370,
-            ["#% chance to drop an additional Beyond Scarab"] = 148,
-            ["Final Boss drops # additional Harvest Scarabs"] = 615,
-            ["Final Boss drops # additional Ritual Scarabs"] = 615,
-            ["Final Boss drops # additional Ambush Scarabs"] = 615,
-            ["Scarabs dropped by slain Enemies have #% chance to be Duplicated"] = 918,
             ["#% reduced Recovery Rate of Life, Mana and Energy Shield per Endurance Charge"] = -18,
             ["Divination Cards dropped by slain Enemies have #% chance to be Duplicated"] = 696,
             ["#% increased Quantity of Items found in this Area"] = 520,
@@ -186,9 +168,6 @@ namespace AltarHelperV2
                     if (ImGui.Button("Divine Orb Focus"))
                         ApplyPreset_DivineFocus();
                     ImGui.SameLine();
-                    if (ImGui.Button("Scarab Focus"))
-                        ApplyPreset_ScarabFocus();
-                    ImGui.SameLine();
                     if (ImGui.Button("Eldritch Currency"))
                         ApplyPreset_EldritchFocus();
                     ImGui.SameLine();
@@ -197,9 +176,13 @@ namespace AltarHelperV2
 
                     ImGui.Separator();
                     ImGui.InputTextWithHint("##V2UnitFilter", "Search mods...", ref unitFilter, 200);
+                    ImGui.SameLine();
+                    if (ImGui.Button("X##V2UnitFilterClear"))
+                        unitFilter = "";
+                    if (ImGui.IsItemHovered()) ImGui.SetTooltip("Clear search");
 
-                    // Configured mod counter
-                    int configuredCount = ModTiers.Count(kvp => kvp.Value != 0);
+                    // Configured mod counter (only mods that still exist in the database)
+                    int configuredCount = ModTiers.Count(kvp => kvp.Value != 0 && KnownModIds.Contains(kvp.Key));
                     ImGui.SameLine();
                     ImGui.TextColored(new SN.Vector4(0.7f, 0.9f, 0.7f, 1f), $"  ({configuredCount} configured)");
 
@@ -420,46 +403,6 @@ namespace AltarHelperV2
             SetMod("Non-Damaging Ailments you inflict are reflected back to you", -2000);
         }
 
-        private void ApplyPreset_ScarabFocus()
-        {
-            // === Divine Orb — always worth taking ===
-            SetMod("Final Boss drops # additional Divine Orbs", 10000);
-            SetMod("#% chance to drop an additional Divine Orb", 4000);
-
-            // === Scarabs (prices ~5-11c each, boss drops 2-4) ===
-            // Ultimatum: ~10c
-            SetMod("Final Boss drops # additional Ultimatum Scarabs", 1230);
-            SetMod("#% chance to drop an additional Ultimatum Scarab", 490);
-            // Breach: ~5c
-            SetMod("Final Boss drops # additional Breach Scarabs", 615);
-            SetMod("#% chance to drop an additional Breach Scarab", 246);
-            // Delirium: ~5c
-            SetMod("Final Boss drops # additional Delirium Scarabs", 615);
-            SetMod("#% chance to drop an additional Delirium Scarab", 246);
-            // Legion: ~4c
-            SetMod("Final Boss drops # additional Legion Scarabs", 490);
-            SetMod("#% chance to drop an additional Legion Scarab", 196);
-            // Essence: ~5c
-            SetMod("Final Boss drops # additional Essence Scarabs", 615);
-            SetMod("#% chance to drop an additional Essence Scarab", 246);
-            // Incursion: ~5c
-            SetMod("Final Boss drops # additional Incursion Scarabs", 615);
-            SetMod("#% chance to drop an additional Incursion Scarab", 246);
-            // Beyond: ~3c
-            SetMod("Final Boss drops # additional Beyond Scarabs", 370);
-            SetMod("#% chance to drop an additional Beyond Scarab", 148);
-            // Harvest/Ritual/Ambush: ~5c
-            SetMod("Final Boss drops # additional Harvest Scarabs", 615);
-            SetMod("Final Boss drops # additional Ritual Scarabs", 615);
-            SetMod("Final Boss drops # additional Ambush Scarabs", 615);
-            // Scarab duplication (Player type) — bonus
-            SetMod("Scarabs dropped by slain Enemies have #% chance to be Duplicated", 900);
-
-            // === Dangerous downsides ===
-            SetMod("Take # Chaos Damage per second during any Flask Effect", -9000);
-            SetMod("Projectiles are fired in random directions", -9000);
-            SetMod("#% chance to be targeted by a Meteor when you use a Flask", -5000);
-        }
 
         private void ApplyPreset_EldritchFocus()
         {
@@ -508,6 +451,9 @@ namespace AltarHelperV2
         }
 
         // ============================================================
+        private static readonly HashSet<string> KnownModIds =
+            new(AltarModsConstants.AltarTypes.Select(t => t.Id), StringComparer.OrdinalIgnoreCase);
+
         public int GetModTier(string mod) => ModTiers.GetValueOrDefault(mod ?? "", 0);
         public bool GetModAlert(string mod) => ModAlerts.GetValueOrDefault(mod ?? "", false);
     }
