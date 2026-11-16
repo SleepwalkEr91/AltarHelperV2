@@ -155,7 +155,7 @@ Positive modifier alerts use **Sound — Positive**. Downside alerts and dangero
 
 ### What do the presets do?
 
-Presets quickly assign a group of weights for a farming goal, such as Divine Orbs, Scarabs, or Eldritch Currency. Applying a preset does not clear unrelated configured weights. Preset values are only starting points and are not updated from live market prices.
+Presets quickly assign a group of weights for a farming goal, such as Divine Orbs or Eldritch Currency. Applying a preset does not clear unrelated configured weights. Preset values are only starting points and are not updated from live market prices.
 
 ### What are Unknown Mods?
 
