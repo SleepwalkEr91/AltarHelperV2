@@ -2,7 +2,7 @@ using ExileCore;
 using ExileCore.PoEMemory;
 using ExileCore.PoEMemory.Elements;
 using ExileCore.Shared.Cache;
-using ImGuiNET;
+using Hexa.NET.ImGui;
 using SharpDX;
 using System;
 using System.Collections.Concurrent;

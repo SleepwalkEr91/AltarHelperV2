@@ -15,13 +15,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="tests\**\*.cs" />
-    <PackageReference Include="ImGui.NET" Version="1.90.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="SharpDX.Mathematics" Version="4.2.0" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ExileCore">
       <HintPath>$(ExapiPackage)\ExileCore.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Hexa.NET.ImGui">
+      <HintPath>$(ExapiPackage)\Hexa.NET.ImGui.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="GameOffsets">
