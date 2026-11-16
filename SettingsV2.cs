@@ -316,7 +316,7 @@ namespace AltarHelperV2
                 "A threshold of 0 disables that veto; Positive Veto wins when both apply.");
             DrawFaqItem("What do the modes do?",
                 "Any scores all targets. Minions + Player focuses on Eldritch minions and player effects. " +
-                "Boss + Player focuses on the final map boss and player effects. F7 switches modes by default.");
+                "Boss + Player focuses on the final map boss and player effects. The Mode hotkey (unassigned by default) cycles through the modes.");
             DrawFaqItem("What do the colors mean?",
                 "Gold = positive-veto priority, yellow = recommended, orange = mixed reward and danger, red = avoid.");
             DrawFaqItem("What do the dots mean?",
@@ -516,7 +516,7 @@ namespace AltarHelperV2
         [Menu("Boss bonus weight")]
         public RangeNode<int> BossWeight { get; set; } = new RangeNode<int>(0, 0, 100);
 
-        public HotkeyNodeV2 HotkeyMode { get; set; } = new HotkeyNodeV2(Keys.F7);
+        public HotkeyNodeV2 HotkeyMode { get; set; } = new HotkeyNodeV2(Keys.None);
     }
 
     // ============================================================

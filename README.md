@@ -57,7 +57,7 @@ The specified directory must contain `ExileCore.dll` and `GameOffsets.dll`.
 | Cyan dot | Player |
 | Blue dot | Final map boss |
 
-Press `F7` by default to switch between **Any**, **Minions + Player**, and **Boss + Player** modes.
+Assign a **Hotkey Mode** in the settings (none by default) to switch between **Any**, **Minions + Player**, and **Boss + Player** modes.
 
 ## Configuration notes
 
@@ -110,7 +110,7 @@ Example: a Divine Orb reward can remain a priority even when the same option con
 
 ### What do the three modes change?
 
-Press `F7` or change **Mode** in settings:
+Press your **Hotkey Mode** key or change **Mode** in settings:
 
 - **Any** — scores every altar target.
 - **Minions + Player** — scores modifiers affecting Eldritch minions or the player.
